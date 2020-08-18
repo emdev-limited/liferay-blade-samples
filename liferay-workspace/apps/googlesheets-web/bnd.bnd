@@ -1,0 +1,12 @@
+Bundle-SymbolicName: ru.emdev.samples.googlesheets.web
+Bundle-Version: 1.0.0
+
+Import-Package: \
+    !org.apache.avalon.framework.logger.*,\
+    !org.apache.log.*,\
+    !org.eclipse.jetty.*,\
+    *
+
+Web-ContextPath: /sheets-web
+
+-metatype: *
