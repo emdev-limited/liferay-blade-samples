@@ -37,9 +37,9 @@
 
 Зайти в конфигурацию портлета и настроить параметры:
 
-- Идентификатор клиента: 792491835068-gdpgaombsqsbje3rmqkktvajm6slgme2.apps.googleusercontent.com
-- Секрет: haUEOWPFsWYr1W4oZKa2SB-S
-- Идентификатор таблицы: [1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms](https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms)
+- Идентификатор клиента: clientId.apps.googleusercontent.com
+- Секрет: secretId
+- Идентификатор таблицы: (https://docs.google.com/spreadsheets/d/{tableId})
 - Диапазон ячеек: A1:F
 
 ![Настройки портлета](docs/images/gsheet-portlet-settings.png)
