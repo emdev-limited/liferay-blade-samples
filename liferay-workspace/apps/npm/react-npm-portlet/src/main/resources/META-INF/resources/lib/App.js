@@ -11,12 +11,14 @@ export default function App() {
         <div className="container">
           {isSignedIn() ? (
             <React.Fragment>
-              <h1 className="text-center mb-4">Users cards</h1>
+              <h1 className="text-center mb-4">
+                {Liferay().Language.get("users")}
+              </h1>
               <UserCardList />
             </React.Fragment>
           ) : (
             <ClayAlert displayType="warning" title="Attention:">
-              You need to sign in to see this content.
+              {Liferay().Language.get("you-have-attempted-to-access-a-section-of-the-site-that-requires-authentication")}
             </ClayAlert>
           )}
         </div>
