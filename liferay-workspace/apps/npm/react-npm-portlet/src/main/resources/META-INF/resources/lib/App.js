@@ -26,33 +26,8 @@ export default function App() {
 }
 
 function createApolloClient() {
-  let endpoint;
-  // outside Liferay Portal
-  if (process.env.NODE_ENV === 'development') {
-    const user = process.env.REACT_APP_LIFERAY_USER;
-    const password = process.env.REACT_APP_LIFERAY_PASSWORD;
-    const base64credentials = new Buffer(`${user}:${password}`).toString(
-      'base64'
-    );
-
-    endpoint =
-      process.env.REACT_APP_LIFERAY_HOST +
-      process.env.REACT_APP_LIFERAY_GRAPHQL_ENDPOINT;
-
-    return new ApolloClient({
-      uri: endpoint,
-      headers: {
-        Authorization: 'Basic ' + base64credentials
-      }
-    });
-  }
-
-  endpoint = `${'/o/graphql'}?p_auth=${
-    Liferay().authToken
-  }`;
-
   return new ApolloClient({
-    uri: endpoint,
+    uri: `/o/graphql?p_auth=${Liferay().authToken}`,
     credentials: 'same-origin'
   });
 }
