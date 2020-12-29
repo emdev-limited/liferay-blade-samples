@@ -11,12 +11,14 @@ export default function App() {
         <div className="container">
           {isSignedIn() ? (
             <React.Fragment>
-              <h1 className="text-center mb-4">Users cards</h1>
+              <h1 className="text-center mb-4">
+                {Liferay().Language.get("users")}
+              </h1>
               <UserCardList />
             </React.Fragment>
           ) : (
             <ClayAlert displayType="warning" title="Attention:">
-              You need to sign in to see this content.
+              {Liferay().Language.get("you-have-attempted-to-access-a-section-of-the-site-that-requires-authentication")}
             </ClayAlert>
           )}
         </div>
@@ -26,33 +28,8 @@ export default function App() {
 }
 
 function createApolloClient() {
-  let endpoint;
-  // outside Liferay Portal
-  if (process.env.NODE_ENV === 'development') {
-    const user = process.env.REACT_APP_LIFERAY_USER;
-    const password = process.env.REACT_APP_LIFERAY_PASSWORD;
-    const base64credentials = new Buffer(`${user}:${password}`).toString(
-      'base64'
-    );
-
-    endpoint =
-      process.env.REACT_APP_LIFERAY_HOST +
-      process.env.REACT_APP_LIFERAY_GRAPHQL_ENDPOINT;
-
-    return new ApolloClient({
-      uri: endpoint,
-      headers: {
-        Authorization: 'Basic ' + base64credentials
-      }
-    });
-  }
-
-  endpoint = `${'/o/graphql'}?p_auth=${
-    Liferay().authToken
-  }`;
-
   return new ApolloClient({
-    uri: endpoint,
+    uri: `/o/graphql?p_auth=${Liferay().authToken}`,
     credentials: 'same-origin'
   });
 }
