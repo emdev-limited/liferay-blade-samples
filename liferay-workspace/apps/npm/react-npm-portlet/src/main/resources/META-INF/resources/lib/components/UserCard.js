@@ -2,20 +2,15 @@ import React from 'react';
 import {ClayCardWithUser} from '@clayui/card';
 import { Liferay } from '../App';
 
-export default function UserCard(props) {
-
-  let [userPhoto, setUserPhoto] = React.useState(false);
- 
+export default function UserCard({alternateName, name, image}) {
   return (
     <div className="col-md-4">
       <ClayCardWithUser
-        description={props.alternateName}
+        description={alternateName}
         href="#"
-        name={props.name}
+        name={name}
         spritemap={Liferay().ThemeDisplay.getPathThemeImages()+'/clay/icons.svg'}
-        userImageSrc = {
-          userPhoto ? '/userpic.png' : null
-        }
+        userImageSrc={image}
       />
   </div>
   );

@@ -17,7 +17,8 @@ export default function UserCardList() {
       items {
         name,
         alternateName,
-        id
+        id,
+        image
       }
       page
       pageSize
@@ -26,7 +27,7 @@ export default function UserCardList() {
   }
   `;
 
-  const { loading, error, data} = useQuery(ALL_USERS);
+  const {loading, error, data} = useQuery(ALL_USERS);
 
   if (loading) return <ClayLoadingIndicator />;
   if (error) {
@@ -54,8 +55,9 @@ export default function UserCardList() {
   }
 
   const cards = items.map(
-      ({name, id, alternateName}) => (
+      ({name, id, alternateName, image}) => (
           <UserCard
+            image={image}
             key={id}
             name={name}
             alternateName={alternateName}

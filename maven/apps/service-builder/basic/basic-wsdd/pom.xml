@@ -43,6 +43,16 @@
 						<artifactId>com.liferay.portal.kernel</artifactId>
 						<version>4.4.0</version>
 					</dependency>
+					<dependency>
+						<groupId>blade</groupId>
+						<artifactId>basic-api</artifactId>
+						<version>1.0.0</version>
+					</dependency>
+					<dependency>
+						<groupId>blade</groupId>
+						<artifactId>basic-service</artifactId>
+						<version>1.0.0</version>
+					</dependency>
 				</dependencies>
 			</plugin>
 		</plugins>
