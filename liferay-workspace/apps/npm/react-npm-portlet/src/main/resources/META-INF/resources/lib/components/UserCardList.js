@@ -4,7 +4,6 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayAlert from '@clayui/alert';
-import {Liferay} from "../App";
 
 export default function UserCardList() {
 
@@ -49,7 +48,7 @@ export default function UserCardList() {
   if (items.length === 0) {
     return (
       <ClayAlert displayType="info" className="text-center">
-        {Liferay().Language.get("this-organization-does-not-have-any-users")}
+        {Liferay.Language.get("this-organization-does-not-have-any-users")}
       </ClayAlert>
     );
   }

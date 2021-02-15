@@ -1,6 +1,5 @@
 import React from 'react';
 import {ClayCardWithUser} from '@clayui/card';
-import { Liferay } from '../App';
 
 export default function UserCard({alternateName, name, image}) {
   return (
@@ -9,7 +8,7 @@ export default function UserCard({alternateName, name, image}) {
         description={alternateName}
         href="#"
         name={name}
-        spritemap={Liferay().ThemeDisplay.getPathThemeImages()+'/clay/icons.svg'}
+        spritemap={Liferay.ThemeDisplay.getPathThemeImages()+'/clay/icons.svg'}
         userImageSrc={image}
       />
   </div>

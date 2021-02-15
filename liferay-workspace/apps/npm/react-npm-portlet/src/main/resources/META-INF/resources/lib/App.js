@@ -12,13 +12,13 @@ export default function App() {
           {isSignedIn() ? (
             <React.Fragment>
               <h1 className="text-center mb-4">
-                {Liferay().Language.get("users")}
+                {Liferay.Language.get("users")}
               </h1>
               <UserCardList />
             </React.Fragment>
           ) : (
             <ClayAlert displayType="warning" title="Attention:">
-              {Liferay().Language.get("you-have-attempted-to-access-a-section-of-the-site-that-requires-authentication")}
+              {Liferay.Language.get("you-have-attempted-to-access-a-section-of-the-site-that-requires-authentication")}
             </ClayAlert>
           )}
         </div>
@@ -29,18 +29,11 @@ export default function App() {
 
 function createApolloClient() {
   return new ApolloClient({
-    uri: `/o/graphql?p_auth=${Liferay().authToken}`,
+    uri: `/o/graphql?p_auth=${Liferay.authToken}`,
     credentials: 'same-origin'
   });
 }
 
 export function isSignedIn() {
-  if (process.env.NODE_ENV === 'development') {
-    return true;
-  }
-  return Liferay().ThemeDisplay.isSignedIn();
-}
-
-export function Liferay() {
-  return window['Liferay'];
+  return Liferay.ThemeDisplay.isSignedIn();
 }
