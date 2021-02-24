@@ -1,5 +1,4 @@
 node_modules
 .idea
 .env.local
-.npmbundlerrc
 package-lock.json
