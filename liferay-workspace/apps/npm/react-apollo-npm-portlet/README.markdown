@@ -9,12 +9,12 @@
         > src
             > main
                 > java
-                    > com.liferay.blade.npm.react.portlet
-                        > ReactPortlet.java
+                    > com.liferay.blade.npm.react.apollo.portlet
+                        > ApolloReactPortlet.java
                 > resources 
                     > META-INF.resources
                         > css
-                            index.css
+                            index.scss
                         > lib
                             App.js
                             index.js

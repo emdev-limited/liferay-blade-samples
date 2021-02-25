@@ -1,7 +1,8 @@
-.portlet-react-user-cards .card-title.big-title {
+.react-apollo-npm-portlet {
+  .card-title.big-title {
     font-size: 1.6em;
-}
-.portlet-react-user-cards .usersPaginationBtns {
+  }
+  .usersPaginationBtns {
     cursor: pointer;
     align-items: center;
     border-radius: 4px;
@@ -21,39 +22,34 @@
     position: relative;
     transition: box-shadow .15s;
     margin-right: 5px;
-}
-
-.portlet-react-user-cards .usersPaginationBtns:hover {
+  }
+  .usersPaginationBtns:hover {
     border-color: transparent;
     color: #272833;
     text-decoration: none;
     z-index: 2;
-    background-color: rgba(0,0,0,0.02);
-}
-
-.portlet-react-user-cards .currenPage {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  .currenPage {
     margin-right: 5px;
     border-color: transparent;
     color: #272833;
     cursor: default;
     z-index: 3;
-    background-color: rgba(0,0,0,0.04);
-}
-
-.portlet-react-user-cards .card.user-card.card-type-asset:hover {
-    box-shadow: 0 0 0 2px #80acff;
-}
-
-.portlet-react-user-cards .icon-angle:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  .icon-angle:hover {
     border-color: transparent;
     color: #272833;
     text-decoration: none;
     z-index: 2;
-    background-color: rgba(0,0,0,0.02);
+    background-color: rgba(0, 0, 0, 0.02);
     cursor: pointer;
-}
-
-.portlet-react-user-cards .icon-angle {
+  }
+  .card.user-card.card-type-asset:hover {
+    box-shadow: 0 0 0 2px #80acff;
+  }
+  .icon-angle {
     align-items: center;
     border-radius: 4px;
     border-color: transparent;
@@ -69,4 +65,5 @@
     padding-left: .625rem;
     padding-right: .625rem;
     margin-right: 5px;
+  }
 }

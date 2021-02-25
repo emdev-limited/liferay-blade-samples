@@ -1,0 +1,3 @@
+Bundle-SymbolicName: com.liferay.blade.npm.react.apollo.portlet
+Bundle-Version: 1.0.0
+Web-ContextPath: /react-apollo-npm-portlet
