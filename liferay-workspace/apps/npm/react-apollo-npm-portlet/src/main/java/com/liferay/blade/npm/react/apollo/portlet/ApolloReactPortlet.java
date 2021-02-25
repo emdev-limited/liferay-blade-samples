@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class)
-public class ReactPortlet extends MVCPortlet {
+public class ApolloReactPortlet extends MVCPortlet {
 
 	@Override
 	public void doView(

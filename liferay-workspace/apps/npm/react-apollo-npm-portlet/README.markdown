@@ -41,7 +41,7 @@
 1. Скачать расширение для Chrome (ALtair GraphQL Client): https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja?hl=en
 2. Залогиниться на портале;
 3. Выбрать тип запроса (POST);
-4. Ввести URL запроса в формате: http://incomand72-dev.emdev.ru/o/graphql?p_auth=Z1gFwQ1j
+4. Ввести URL запроса в формате: http://incomand72-dev.emdev.ru/o/graphql?p_auth=<p_auth>
    (Токен `p_auth` можно взять при помощи команды: Liferay.authToken);
 5. Найти в строке поиска нужный запрос (например userAccounts);
 6. В левой части меню ввести данные запроса;
