@@ -11,7 +11,7 @@ export default function UserCardList() {
   let [portionNumber, setPortionNumber] = useState(1);
   let [items, setItems] = useState(null)
   let [usersCount, setUsersCount] = useState(null)
-
+  let pageSize = 5;
   // const ALL_USERS = gql`
   // query{
   //   userAccounts(page: ${currentPage}, pageSize: ${5}) {
@@ -33,8 +33,8 @@ export default function UserCardList() {
         '/user/get-company-users',
         {
           companyId: Liferay.ThemeDisplay.getCompanyId(),
-          start: currentPage,
-          end: 5
+          start: (currentPage - 1) * pageSize + 1,
+          end: currentPage * pageSize + 1
         },
         function(obj) {
           console.log(obj);
@@ -91,11 +91,12 @@ export default function UserCardList() {
   }
 
   const cards = items.map(
-      ({firstName, contactId, portraitId}) => (
+      ({firstName, lastName, contactId, portraitId}) => (
           <UserCard
             imageId={portraitId}
             key={contactId}
-            name={firstName}
+            firstName={firstName}
+            lastName={lastName}
             // alternateName={alternateName}
           />
       )
@@ -105,7 +106,7 @@ export default function UserCardList() {
     return <ClayLoadingIndicator />
   }
 
-    let pageSize = 5
+
     let pagesCount = Math.ceil(usersCount / pageSize);
     let pages = [];
     console.log(pagesCount)
