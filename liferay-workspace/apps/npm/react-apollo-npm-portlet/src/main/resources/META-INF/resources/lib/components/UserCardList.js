@@ -56,10 +56,10 @@ export default function UserCardList() {
   const cards = items.map(
       ({name, id, alternateName, image}) => (
           <UserCard
-            image={image}
-            key={id}
-            name={name}
-            alternateName={alternateName}
+              image={image}
+              key={id}
+              name={name}
+              alternateName={alternateName}
           />
       )
   );
@@ -71,23 +71,32 @@ export default function UserCardList() {
         pages.push(i);
     }
 
-    let portionSize = 3;
+    let portionSize = 5;
     let portionCount = Math.ceil(pagesCount / portionSize);
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber  = portionNumber * portionSize;
+
+    const leftHandleClickPage = () => {
+      if (currentPage === 1) {
+        return false
+      }
+      if (currentPage === leftPortionPageNumber) {
+        setPortionNumber(portionNumber - 1);
+      }
+      setCurrentPage(currentPage - 1);
+    };
+    const rightHandleClickPage = () => {
+      if (currentPage === rightPortionPageNumber) {
+        setPortionNumber(portionNumber + 1);
+      }
+      setCurrentPage(currentPage + 1);
+    };
 
   return <React.Fragment> <div className="row">{cards}</div>
 
     <hr/>
     <div>
-        { currentPage > 1 && <span className={'icon-angle'} onClick={() => {
-          if (portionNumber === 1) {
-            setCurrentPage(1);
-          } else {
-            setPortionNumber(portionNumber - 1);
-            setCurrentPage(leftPortionPageNumber - portionSize);
-          }
-        }}>
+        {<span className={ currentPage > 1 ? 'icon-angle' : 'icon-angle disabled'} onClick={leftHandleClickPage}>
           {<svg className="lexicon-icon lexicon-icon-angle-left" focusable="false" role="presentation" viewBox="0 0 420 420">
             <use href={Liferay.ThemeDisplay.getPathThemeImages() + "/lexicon/icons.svg#caret-left"}/>
           </svg>}
@@ -101,10 +110,7 @@ export default function UserCardList() {
                              onClick={() => setCurrentPage(p)}>{p}</span>
             })}</b>
 
-        {portionCount > portionNumber && <span className={'icon-angle'} onClick={() => {
-            setPortionNumber(portionNumber + 1);
-            setCurrentPage(rightPortionPageNumber + 1);
-        }}>{<svg className="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation" viewBox="0 0 420 420">
+        {portionCount > portionNumber && <span className={'icon-angle'} onClick={rightHandleClickPage}>{<svg className="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation" viewBox="0 0 420 420">
           <use href={Liferay.ThemeDisplay.getPathThemeImages() + "/lexicon/icons.svg#caret-right"}/>
         </svg>}</span> }
     </div>
