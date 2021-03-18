@@ -7,8 +7,31 @@ import ClayAlert from '@clayui/alert';
 
 export default function UserCardList() {
 
-  let [currentPage, setCurrentPage] = React.useState(1);
+  let href = window.location.href;
+  console.log('href', href)
+  let res;
+  res = Number(href.split('=').pop());
+  if (!res) {
+    res = 1;
+  }
+
+  let [currentPage, setCurrentPage] = React.useState(res);
   let [portionNumber, setPortionNumber] = React.useState(1);
+
+  let portionSize = 5;
+  let rightPortionPageNumber  = portionNumber * portionSize;
+
+  React.useEffect(() => {
+    if (currentPage !== 1) {
+      window.history.pushState('', '', `?cur=${currentPage}`);
+    } else {
+      window.history.pushState('', '', location.pathname);
+    }
+    if (currentPage > rightPortionPageNumber) {
+      setPortionNumber(portionNumber + 1);
+    }
+    setCurrentPage(currentPage);
+  }, [currentPage])
 
   const ALL_USERS = gql`
   query{
@@ -71,10 +94,10 @@ export default function UserCardList() {
         pages.push(i);
     }
 
-    let portionSize = 5;
+    // let portionSize = 5;
     let portionCount = Math.ceil(pagesCount / portionSize);
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
-    let rightPortionPageNumber  = portionNumber * portionSize;
+    // let rightPortionPageNumber  = portionNumber * portionSize;
 
     const leftHandleClickPage = () => {
       if (currentPage === 1) {
