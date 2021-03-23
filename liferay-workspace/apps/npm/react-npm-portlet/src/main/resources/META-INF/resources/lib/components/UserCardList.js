@@ -1,34 +1,45 @@
 import React, {useEffect, useState} from 'react';
 import UserCard from './UserCard';
-// import { useQuery } from '@apollo/react-hooks';
-// import { gql } from 'apollo-boost';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayAlert from '@clayui/alert';
 
 export default function UserCardList() {
 
-  let [currentPage, setCurrentPage] = useState(1);
-  let [portionNumber, setPortionNumber] = useState(1);
-  let [items, setItems] = useState(null)
-  let [usersCount, setUsersCount] = useState(null)
-  let pageSize = 5;
-  // const ALL_USERS = gql`
-  // query{
-  //   userAccounts(page: ${currentPage}, pageSize: ${5}) {
-  //     items {
-  //       name,
-  //       alternateName,
-  //       id,
-  //       image
-  //     }
-  //     page
-  //     pageSize
-  //     totalCount
-  //   }
-  // }
-  // `;
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [portionNumber, setPortionNumber] = useState(1);
+  const [items, setItems] = useState([]);
+  const [usersCount, setUsersCount] = useState(null);
+  const [isFetching, setIsFetching] =  useState(false);
+  const pageSize = 5;
+
+  let href = window.location.href;
+  console.log('href', href)
+  let res;
+  res = Number(href.split('=').pop());
+  if (!res) {
+    res = 1;
+  }
+
+  let [currentPage, setCurrentPage] = React.useState(res);
+  let [portionNumber, setPortionNumber] = React.useState(1);
+  let portionSize = 5;
+  let rightPortionPageNumber  = portionNumber * portionSize;
+
   useEffect(() => {
-    console.log('useEffect')
+    setIsFetching(true);
+
+    if (currentPage !== 1) {
+      window.history.pushState('', '', `?cur=${currentPage}`);
+    } else {
+      window.history.pushState('', '', location.pathname);
+    }
+    if (currentPage > rightPortionPageNumber) {
+      setPortionNumber(portionNumber + 1);
+    }
+    setCurrentPage(currentPage);
+
+
+
     Liferay.Service(
         '/user/get-company-users',
         {
@@ -37,30 +48,26 @@ export default function UserCardList() {
           end: currentPage * pageSize + 1
         },
         function(obj) {
-          console.log(obj);
-
-          setItems(obj)
-
+          setIsFetching(false);
+          setItems(obj);
         }
     );
-  }, [currentPage])
 
-  useEffect(() => {
     Liferay.Service(
         '/user/get-company-users-count',
         {
           companyId: Liferay.ThemeDisplay.getCompanyId()
         },
         function(obj) {
-          console.log(obj);
-          setUsersCount(obj)
+          setIsFetching(false);
+          setUsersCount(obj);
         }
     );
-  }, [])
+  }, [currentPage]);
 
   // const {loading, error, data} = useQuery(ALL_USERS);
 
-  // if (loading) return <ClayLoadingIndicator />;
+  if (isFetching) return <ClayLoadingIndicator />;
   // if (error) {
   //   return (
   //     <ClayAlert displayType="danger" title="Error:">
@@ -72,17 +79,7 @@ export default function UserCardList() {
   //   );
   // }
 
-  if (!items) {
-    return <ClayLoadingIndicator />
-
-  }
-  // let {items} = data.userAccounts;
-  // let {totalCount} = data.userAccounts;
-  // let {pageSize} = data.userAccounts;
-
-  // let {page} = data.userAccounts;
-
-  if (items.length === 0) {
+  if (!isFetching && items.length === 0) {
     return (
       <ClayAlert displayType="info" className="text-center">
         {Liferay.Language.get("this-organization-does-not-have-any-users")}
@@ -93,46 +90,47 @@ export default function UserCardList() {
   const cards = items.map(
       ({firstName, lastName, contactId, portraitId}) => (
           <UserCard
-            imageId={portraitId}
-            key={contactId}
-            firstName={firstName}
-            lastName={lastName}
-            // alternateName={alternateName}
+              imageId={portraitId}
+              key={contactId}
+              firstName={firstName}
+              lastName={lastName}
           />
       )
   );
 
-  if (!usersCount) {
-    return <ClayLoadingIndicator />
-  }
-
-
-    let pagesCount = Math.ceil(usersCount / pageSize);
+    let pagesCount = Math.ceil(usersCount / pageSize);  // userCount null ?
     let pages = [];
-    console.log(pagesCount)
 
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
 
-    let portionSize = 3;
-    // let page = 3;
+    // let portionSize = 3;
     let portionCount = Math.ceil(pagesCount / portionSize);
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
-    let rightPortionPageNumber  = portionNumber * portionSize;
+    // let rightPortionPageNumber  = portionNumber * portionSize;
+
+  const leftHandleClickPage = () => {
+    if (currentPage === 1) {
+      return false
+    }
+    if (currentPage === leftPortionPageNumber) {
+      setPortionNumber(portionNumber - 1);
+    }
+    setCurrentPage(currentPage - 1);
+  };
+  const rightHandleClickPage = () => {
+    if (currentPage === rightPortionPageNumber) {
+      setPortionNumber(portionNumber + 1);
+    }
+    setCurrentPage(currentPage + 1);
+  };
 
   return <React.Fragment> <div className="row">{cards}</div>
 
     <hr/>
     <div>
-        { currentPage > 1 && <span className={'icon-angle'} onClick={() => {
-          if (portionNumber === 1) {
-            setCurrentPage(1);
-          } else {
-            setPortionNumber(portionNumber - 1);
-            setCurrentPage(leftPortionPageNumber - portionSize);
-          }
-        }}>
+      {<span className={ currentPage > 1 ? 'icon-angle' : 'icon-angle disabled'} onClick={leftHandleClickPage}>
           {<svg className="lexicon-icon lexicon-icon-angle-left" focusable="false" role="presentation" viewBox="0 0 420 420">
             <use href={Liferay.ThemeDisplay.getPathThemeImages() + "/lexicon/icons.svg#caret-left"}/>
           </svg>}
@@ -146,12 +144,9 @@ export default function UserCardList() {
                              onClick={() => setCurrentPage(p)}>{p}</span>
             })}</b>
 
-        {portionCount > portionNumber && <span className={'icon-angle'} onClick={() => {
-            setPortionNumber(portionNumber + 1);
-            setCurrentPage(rightPortionPageNumber + 1);
-        }}>{<svg className="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation" viewBox="0 0 420 420">
-          <use href={Liferay.ThemeDisplay.getPathThemeImages() + "/lexicon/icons.svg#caret-right"}/>
-        </svg>}</span> }
+      {portionCount > portionNumber && <span className={'icon-angle'} onClick={rightHandleClickPage}>{<svg className="lexicon-icon lexicon-icon-angle-right" focusable="false" role="presentation" viewBox="0 0 420 420">
+        <use href={Liferay.ThemeDisplay.getPathThemeImages() + "/lexicon/icons.svg#caret-right"}/>
+      </svg>}</span> }
     </div>
   </React.Fragment>
 }
