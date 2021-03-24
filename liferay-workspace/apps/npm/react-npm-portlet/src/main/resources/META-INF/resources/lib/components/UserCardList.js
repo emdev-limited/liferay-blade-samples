@@ -5,23 +5,20 @@ import ClayAlert from '@clayui/alert';
 
 export default function UserCardList() {
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [portionNumber, setPortionNumber] = useState(1);
   const [items, setItems] = useState([]);
   const [usersCount, setUsersCount] = useState(null);
   const [isFetching, setIsFetching] =  useState(false);
   const pageSize = 5;
 
   let href = window.location.href;
-  console.log('href', href)
   let res;
   res = Number(href.split('=').pop());
   if (!res) {
     res = 1;
   }
 
-  let [currentPage, setCurrentPage] = React.useState(res);
-  let [portionNumber, setPortionNumber] = React.useState(1);
+  const [currentPage, setCurrentPage] = useState(res);
+  const [portionNumber, setPortionNumber] = useState(1);
   let portionSize = 5;
   let rightPortionPageNumber  = portionNumber * portionSize;
 
@@ -37,8 +34,6 @@ export default function UserCardList() {
       setPortionNumber(portionNumber + 1);
     }
     setCurrentPage(currentPage);
-
-
 
     Liferay.Service(
         '/user/get-company-users',
@@ -65,21 +60,10 @@ export default function UserCardList() {
     );
   }, [currentPage]);
 
-  // const {loading, error, data} = useQuery(ALL_USERS);
 
   if (isFetching) return <ClayLoadingIndicator />;
-  // if (error) {
-  //   return (
-  //     <ClayAlert displayType="danger" title="Error:">
-  //       An error occured while loading data.
-  //       <div className="mt-2">
-  //         <code>{error.message}</code>
-  //       </div>
-  //     </ClayAlert>
-  //   );
-  // }
 
-  if (!isFetching && items.length === 0) {
+  if (items.length === 0) {
     return (
       <ClayAlert displayType="info" className="text-center">
         {Liferay.Language.get("this-organization-does-not-have-any-users")}
@@ -98,17 +82,15 @@ export default function UserCardList() {
       )
   );
 
-    let pagesCount = Math.ceil(usersCount / pageSize);  // userCount null ?
-    let pages = [];
+  let pagesCount = Math.ceil(usersCount / pageSize);
+  let pages = [];
 
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
-    }
+  for (let i = 1; i <= pagesCount; i++) {
+      pages.push(i);
+  }
 
-    // let portionSize = 3;
-    let portionCount = Math.ceil(pagesCount / portionSize);
-    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
-    // let rightPortionPageNumber  = portionNumber * portionSize;
+  let portionCount = Math.ceil(pagesCount / portionSize);
+  let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
 
   const leftHandleClickPage = () => {
     if (currentPage === 1) {

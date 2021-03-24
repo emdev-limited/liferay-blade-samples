@@ -9,8 +9,8 @@
         > src
             > main
                 > java
-                    > com.liferay.blade.npm.react.apollo.portlet
-                        > ApolloReactPortlet.java
+                    > com.liferay.blade.npm.react.portlet
+                        > ReactPortlet.java
                 > resources 
                     > META-INF.resources
                         > css
@@ -34,31 +34,5 @@
 Сам файл `index.js` указывается в `package.json` под ключом `main`. Ключ `name` - название портлета.
        
 #
-#### **Описание как делать запросы и проверять их на текущем портале используя Chrome расширение:**
 
-#### Для запросов на бек использовался ApolloClient. ####
-
-1. Скачать расширение для Chrome (ALtair GraphQL Client): https://chrome.google.com/webstore/detail/altair-graphql-client/flnheeellpciglgpaodhkhmapeljopja?hl=en
-2. Залогиниться на портале;
-3. Выбрать тип запроса (POST);
-4. Ввести URL запроса в формате: http://localhost/o/graphql?p_auth=<p_auth>
-   (Токен `p_auth` можно взять при помощи команды: Liferay.authToken);
-5. Найти в строке поиска нужный запрос (например userAccounts);
-6. В левой части меню ввести данные запроса;
-
-#### **Пример:** ####
-        query{
-          userAccounts(page: 2, pageSize: 1){
-            items {
-                name,
-                alternateName,
-                id,
-                image
-            }
-            page
-            pageSize
-            totalCount
-          }
-        }
-
-7. Send request;
+#### Для запросов на бек используется api/jsonws. ####
