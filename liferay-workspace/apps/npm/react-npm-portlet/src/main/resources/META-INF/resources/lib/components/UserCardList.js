@@ -8,9 +8,9 @@ export default function UserCardList() {
   const [items, setItems] = useState([]);
   const [usersCount, setUsersCount] = useState(null);
   const [isFetching, setIsFetching] =  useState(false);
-  const pageSize = 5;
+  const pageSize = 6;
 
-  let href = window.location.href;
+  const href = window.location.href;
   let res;
   res = Number(href.split('=').pop());
   if (!res) {
@@ -19,8 +19,8 @@ export default function UserCardList() {
 
   const [currentPage, setCurrentPage] = useState(res);
   const [portionNumber, setPortionNumber] = useState(1);
-  let portionSize = 5;
-  let rightPortionPageNumber  = portionNumber * portionSize;
+  const portionSize = 5;
+  const rightPortionPageNumber  = portionNumber * portionSize;
 
   useEffect(() => {
     setIsFetching(true);
@@ -72,12 +72,13 @@ export default function UserCardList() {
   }
 
   const cards = items.map(
-      ({firstName, lastName, contactId, portraitId}) => (
+      ({firstName, lastName, middleName, contactId, portraitId}) => (
           <UserCard
               imageId={portraitId}
               key={contactId}
               firstName={firstName}
               lastName={lastName}
+              middleName={middleName}
           />
       )
   );

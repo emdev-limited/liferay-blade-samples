@@ -1,7 +1,5 @@
 import React from 'react';
 import UserCardList from './components/UserCardList';
-// import ApolloClient from 'apollo-boost';
-// import { ApolloProvider } from '@apollo/react-hooks';
 import ClayAlert from '@clayui/alert';
 
 export default function App() {
@@ -24,13 +22,6 @@ export default function App() {
       </div>
   );
 }
-
-// function createApolloClient() {
-//   return new ApolloClient({
-//     uri: `/o/graphql?p_auth=${Liferay.authToken}`,
-//     credentials: 'same-origin'
-//   });
-// }
 
 export function isSignedIn() {
   return Liferay.ThemeDisplay.isSignedIn();
