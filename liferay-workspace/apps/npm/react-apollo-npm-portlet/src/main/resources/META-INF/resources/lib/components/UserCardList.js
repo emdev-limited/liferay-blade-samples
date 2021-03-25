@@ -7,19 +7,18 @@ import ClayAlert from '@clayui/alert';
 
 export default function UserCardList() {
 
-  let href = window.location.href;
-  console.log('href', href)
+  const href = window.location.href;
   let res;
   res = Number(href.split('=').pop());
   if (!res) {
     res = 1;
   }
 
-  let [currentPage, setCurrentPage] = React.useState(res);
-  let [portionNumber, setPortionNumber] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState(res);
+  const [portionNumber, setPortionNumber] = React.useState(1);
 
-  let portionSize = 5;
-  let rightPortionPageNumber  = portionNumber * portionSize;
+  const portionSize = 5;
+  const rightPortionPageNumber  = portionNumber * portionSize;
 
   React.useEffect(() => {
     if (currentPage !== 1) {
@@ -35,7 +34,7 @@ export default function UserCardList() {
 
   const ALL_USERS = gql`
   query{
-    userAccounts(page: ${currentPage}, pageSize: ${5}) {
+    userAccounts(page: ${currentPage}, pageSize: ${6}) {
       items {
         name,
         alternateName,
@@ -75,7 +74,7 @@ export default function UserCardList() {
       </ClayAlert>
     );
   }
-
+console.log(items)
   const cards = items.map(
       ({name, id, alternateName, image}) => (
           <UserCard
@@ -94,10 +93,8 @@ export default function UserCardList() {
         pages.push(i);
     }
 
-    // let portionSize = 5;
     let portionCount = Math.ceil(pagesCount / portionSize);
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
-    // let rightPortionPageNumber  = portionNumber * portionSize;
 
     const leftHandleClickPage = () => {
       if (currentPage === 1) {
